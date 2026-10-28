@@ -1,0 +1,11 @@
+{
+  "name": "desk-panel",
+  "version": "0.2.0",
+  "description": "Claude desktop-style side panel for Claude Code: plan, changes, background tasks, usage, git, activity and context; toggle with /panel",
+  "author": { "name": "joshot", "url": "https://github.com/joshotws" },
+  "license": "MIT",
+  "homepage": "https://github.com/joshotws/desk-panel",
+  "repository": "https://github.com/joshotws/desk-panel",
+  "keywords": ["claude-code", "plugin", "panel", "ui"],
+  "types": "./types/index.d.ts"
+}

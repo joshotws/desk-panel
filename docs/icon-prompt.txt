@@ -1,0 +1,5 @@
+A flat, minimal app icon, square 1:1. The dark charcoal background (#1f1f1f) fills the entire canvas edge to edge: no rounded corners, no border, no frame.
+
+Centered glyph, occupying about 70% of the canvas with generous even padding: a simplified terminal window drawn as a rounded outline in soft gray (#9a9a9a) with three tiny dots in its title bar. Inside it, on the right side, a narrower docked side panel outlined in warm orange (#d97757). The panel contains four short horizontal bars of different lengths, stacked like section rows: the top two in warm orange, the lower two in soft gray. At the bottom of the panel, one small progress bar, one third filled in green (#6cc070).
+
+Style: crisp flat vector shapes, thick clean strokes, high contrast, still readable when shrunk to 32 pixels. No text, no letters, no numbers, no logos, no brand marks, no people, no gradients beyond a very subtle shadow.

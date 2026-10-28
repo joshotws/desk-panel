@@ -1,0 +1,21 @@
+A clean, flat UI illustration (not a photo) of a dark terminal window running a command-line AI coding assistant, landscape 3:2. Pixel-crisp monospace text everywhere, all text perfectly legible and spelled exactly as written below.
+
+Left 58% of the window: the chat transcript. A user line starting with "> make every panel section fault tolerant", two short assistant reply lines in light gray, a tool line "● Edit hooks/register.tsx" and a tool line "● Bash claude plugin test desk-panel   13 pass", and an empty rounded prompt box at the very bottom.
+
+Right 42% of the window: a docked side panel with a thin rounded light-gray border. Inside it, top to bottom:
+
+Header block: "Opus 5.5" in bold white; below it "max effort" in orange followed by "  ·  42m  ·  7 turns" in gray; below that "desk-panel" followed by "  (main)" in gray.
+
+Section "▾ Plan  3/4" (title in warm orange): rows "✓ Read the usage API" (dim, strikethrough), "✓ Wrap each section" (dim, strikethrough), "✓ Add fallbacks" (dim, strikethrough), "▶ Writing tests" (bold orange).
+
+Section "▾ Changes  2 files" with a small outlined button "Open /diff" aligned right: rows "▸ M hooks/register.tsx" with "+412" in green and "−120" in red, and "▸ M README.md" with "+18" in green and "−2" in red.
+
+Section "▾ Background tasks": one gray line "(no background tasks)" and one yellow line "⚠ subagent list unavailable: retrying".
+
+Section "▾ Usage  API billing": a label "Context", a horizontal progress bar about 12 percent filled in green with the rest in dark gray blocks, text " 12% used", a gray line "24k / 200k tokens", then gray lines "Plan limits: none (billed per token via API)" and "Total cost: $0.42 (pay-as-you-go)".
+
+Section "▾ Git  main": gray line "↑0 ↓0  ·  2 uncommitted files" and a row with a yellow short hash "a1b2c3d" and text "desk-panel: tolerate API billing".
+
+Two collapsed rows at the bottom: "▸ Activity" and "▸ Context  12% used".
+
+Style: dark charcoal background #1f1f1f, warm orange accent #d97757 for section titles, soft gray #9a9a9a for secondary text, green #6cc070 and red #e06c75 for diff counts, amber #e5c07b for the warning line. Generous line spacing, aligned columns, minimal window title bar with three small dots, subtle shadow. No logos, no brand marks, no people, no extra text beyond what is listed.

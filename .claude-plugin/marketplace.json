@@ -1,0 +1,14 @@
+{
+  "name": "desk-panel",
+  "owner": { "name": "joshot" },
+  "metadata": {
+    "description": "desk-panel: a Claude desktop-style side panel for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "desk-panel",
+      "source": "./desk-panel",
+      "description": "Claude desktop-style side panel for Claude Code: plan, changes, background tasks, usage, git, activity and context; toggle with /panel"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Claude Code 載入 mod 時產生的 API 型別（每台機器、每個版本各自重新產生）
+desk-panel/.claude-plugin/types/
+# 引擎解開 MCP bundle 的快取
+.mcpb-cache/
+
+# 作業系統與編輯器
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.log
+
+# 本機工具鏈
+node_modules/

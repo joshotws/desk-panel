@@ -1,0 +1,7 @@
+A wide banner, flat UI illustration (not a photo), on a dark charcoal background (#1f1f1f). Keep every element inside the central horizontal band: the top 15% and the bottom 15% of the image contain only plain background.
+
+Left half: the title "desk-panel" in large bold white monospace letters, and below it the one-line subtitle "A session side panel for Claude Code" in soft gray (#9a9a9a) monospace. Both lines spelled exactly as written, perfectly legible.
+
+Right half: a simplified dark terminal window with a minimal title bar with three small dots. On its left side, a few faint gray lines suggesting a chat transcript. On its right side, a docked side panel with a thin rounded light-gray border, listing four section headers stacked top to bottom, "Plan", "Changes", "Usage", "Git", each in warm orange (#d97757) followed by two thin gray placeholder bars. Under "Usage", a small horizontal progress bar about one third filled in green (#6cc070).
+
+Style: crisp flat vector shapes, generous spacing, subtle soft shadow under the window. No logos, no brand marks, no people, and no text other than the words listed above.
