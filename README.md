@@ -1,113 +1,113 @@
 # desk-panel
 
-English · [繁體中文](README.zh-TW.md)
+[English](README.md) · 繁體中文
 
-A side panel for [Claude Code](https://code.claude.com/docs) in the terminal, laid out like the Claude desktop app's right-hand panel: the plan, the files Claude changed, background tasks and subagents, usage and git, in one pane you can act on. Expand a file to see its diff, jump to a subagent's transcript, or open `/diff`. Usage reads right on a subscription and on per-token billing (API key, Bedrock, Vertex, gateways), a failing data source affects only its own section, and while the panel is closed it polls nothing and runs no git.
+給 [Claude Code](https://code.claude.com/docs) 終端機用的側邊面板，版面對應 Claude desktop app 的右側面板：計畫、Claude 改過的檔案、背景任務與 subagent、用量和 git 集中在同一個面板，而且可以直接操作，例如展開檔案看 diff、切去看 subagent 的對話、開 `/diff`。訂閱制和按 token 計費（API key、Bedrock、Vertex、閘道）的用量都能正確顯示；某個資料來源出錯只影響它自己的區塊；面板關著時不輪詢，也不跑 git。
 
-This is an independent project, not affiliated with or endorsed by Anthropic.
+這是獨立專案，與 Anthropic 無關，也未經其背書。
 
-![desk-panel: a session panel docked on the right of the terminal](docs/desk-panel.png)
+![desk-panel：停靠在終端機右側的 Session 面板](docs/desk-panel.png)
 
-<sub>Illustration generated with OpenAI gpt-image-2 (prompt in [`docs/desk-panel-prompt.txt`](docs/desk-panel-prompt.txt)), not a screenshot; the real panel differs in detail.</sub>
+<sub>示意圖由 OpenAI gpt-image-2 產生（prompt 在 [`docs/desk-panel-prompt.txt`](docs/desk-panel-prompt.txt)），不是實際截圖，細節以實際畫面為準。</sub>
 
-Type `/panel` and a panel titled *Session* opens beside the conversation, top to bottom:
+輸入 `/panel`，對話旁邊會開一個標題為 *Session* 的面板，由上而下：
 
-| Section | Shows |
+| 區塊 | 內容 |
 | --- | --- |
-| Header | Model; reasoning effort of the latest request, time since the session started, turn count; current folder and branch |
-| Plan | Todos from the TodoWrite and Task tools with progress (`2/5`); the plan approved through ExitPlanMode |
-| Changes | Files Claude edited this session (`+added −removed`, how long ago), then other uncommitted files from git. Press a file to see its last diff; `Open /diff` opens the built-in diff view |
-| Background tasks | Background shell commands, Monitor watches and subagents. Press a subagent to view its transcript |
-| Usage | Context, *Current session*, *Current week* and *Spend limit* meters with reset times in the same format as `/usage`; estimated cost (see below) |
-| Git | Branch, ahead/behind, number of uncommitted files, last commit or the commits made this session |
-| Activity (collapsed by default) | Running tools with elapsed seconds, tools this turn, last turn's duration, per-tool counts and errors |
-| Context (collapsed by default) | A `/context`-style bar and the largest categories with token counts |
+| 標頭 | 模型；最近一次請求的 effort、工作階段已進行多久、回合數；目前所在的資料夾與 branch |
+| Plan | TodoWrite／Task 工具的待辦與進度（`2/5`）、ExitPlanMode 核准的計畫 |
+| Changes | 這個工作階段 Claude 改過的檔案（`+增 −減`、幾分鐘前），再列 git 裡其他未 commit 的檔案。點檔名展開最近一次的 diff；`Open /diff` 開內建的 diff 畫面 |
+| Background tasks | 背景指令、Monitor、subagent；點 subagent 切去看它的對話 |
+| Usage | Context、*Current session*、*Current week*、*Spend limit* 長條與重設時間（格式同 `/usage`）；估算的花費（見下方） |
+| Git | branch、ahead/behind、未 commit 檔案數、最後一個 commit 或本工作階段的 commit |
+| Activity（預設收合） | 執行中的工具與秒數、本回合工具數、上回合耗時、各工具次數與錯誤數 |
+| Context（預設收合） | 類似 `/context` 的分色長條與最大的幾個類別 token 數 |
 
-Press a section title to fold or unfold it; the layout is remembered across sessions.
+點區塊標題可以收合或展開，收合狀態跨工作階段記住。
 
-## Requirements
+## 需求
 
-- Claude Code with the hooks-module plugin API. Tested with Claude Code 2.1.312. The API is early access and may change between releases, so a newer build may need an updated mod.
-- Where it draws: in the fullscreen terminal layout the panel docks on the right (it asks for 52 columns; the engine keeps it between 24 columns and 45% of the terminal). Outside the fullscreen layout it appears above the prompt. The desktop app's Code tab draws it too.
-- `git` on `PATH` for the Git section (otherwise the section shows git's own error).
-- A terminal font with the usual box and arrow glyphs (`▾ ▸ ✓ ● █ ░ ⚠`).
+- 支援 hooks-module plugin API 的 Claude Code。在 Claude Code 2.1.312 上測試過。這組 API 仍是 early access，版本之間可能變動，新版本可能需要更新這個 mod。
+- 畫在哪裡：終端機的 fullscreen 版面時停靠右側（要求 52 欄，引擎會限制在 24 欄到終端寬度的 45%）；非 fullscreen 版面時顯示在 prompt 上方；desktop app 的 Code 分頁也會畫。
+- Git 區塊需要 `PATH` 上有 `git`（沒有的話區塊顯示 git 的錯誤訊息）。
+- 終端字型要有常見的方塊與箭頭字元（`▾ ▸ ✓ ● █ ░ ⚠`）。
 
-## Install
+## 安裝
 
-In a terminal session, at the prompt:
+在終端機的工作階段裡，於 prompt 輸入：
 
 ```
 /plugin install desk-panel --marketplace joshotws/desk-panel
 ```
 
-From a shell:
+或在 shell 執行：
 
 ```bash
 claude plugin install desk-panel --marketplace joshotws/desk-panel
 ```
 
-In the desktop app, where `/plugin` does not run: click **+** next to the prompt box, then **Plugins**, **Add marketplace** with `joshotws/desk-panel`, then **Add plugin**.
+desktop app 不能跑 `/plugin`：按 prompt 框旁邊的 **+**，選 **Plugins**，**Add marketplace** 輸入 `joshotws/desk-panel`，再 **Add plugin**。
 
-You will be asked `Add marketplace?` naming `github:joshotws/desk-panel` (answer `y`), then for a scope (user scope is first; press Enter). After `Installed desk-panel. Plugin is now active.` the mod runs in that session and in every later one.
+安裝時會先問 `Add marketplace?`（來源是 `github:joshotws/desk-panel`，回 `y`），再選 scope（第一個是 user scope，按 Enter）。看到 `Installed desk-panel. Plugin is now active.` 之後，這個工作階段與之後的每個工作階段都會載入。
 
-## Commands and interactions
+## 指令與操作
 
-| Command | Effect |
+| 指令 | 作用 |
 | --- | --- |
-| `/panel` | Open the panel. New sessions then open it automatically |
-| `/panel close` | Close it and stop the automatic opening. Closing the pane yourself does the same |
-| `/panel reset` | Default layout (Activity and Context folded, the rest open), warnings cleared, every source refreshed |
-| `/panel size` | Report the panel's last drawn size, for troubleshooting |
+| `/panel` | 開啟面板；之後新工作階段會自動開 |
+| `/panel close` | 關閉，並取消自動開啟；自己按關閉面板也一樣 |
+| `/panel reset` | 恢復預設版面（Activity、Context 收合，其餘展開）、清掉警告、重新取一次所有資料 |
+| `/panel size` | 回報面板最近一次畫出來的大小，除錯用 |
 
-If the terminal is too narrow when a session auto-opens the panel, the panel waits and is drawn once the window is wide enough, refreshing at that moment.
+工作階段自動開啟面板時若終端太窄，面板會等到視窗夠寬才畫出來，畫出來的當下會更新資料。
 
-## Usage and cost
+## Usage 與花費
 
-Subscription responses carry the five-hour and weekly windows, so the meters match `/usage`. With an API key, Bedrock, Vertex or a gateway that bills per token, responses carry no plan windows: the section is marked `API billing`, says `Plan limits: none (billed per token via API)`, and labels the cost `pay-as-you-go` (on a subscription it reads `API pricing`).
+訂閱制的回應帶有 5 小時與每週額度，長條與 `/usage` 一致。用 API key、Bedrock、Vertex 或按 token 計費的閘道時，回應沒有方案額度：區塊標 `API billing`，寫 `Plan limits: none (billed per token via API)`，花費標成 `pay-as-you-go`（訂閱制則是 `API pricing`）。
 
-**`Total cost` is an estimate, not a bill.** It is Claude Code's own figure, the same one `/cost` shows: tokens per response times Anthropic's list prices. Through a gateway the gateway's own pricing applies. When Claude Code cannot price the model (for example a non-Claude model behind a gateway) the cost is zero or absent and the line is hidden.
+**`Total cost` 是估算，不是帳單。** 它是 Claude Code 自己算的數字，和 `/cost` 相同：每次回應的 token 數乘上 Anthropic 的牌價。透過閘道調用時，實際收費以閘道的計價為準；Claude Code 算不出價格時（例如閘道後面是非 Claude 的模型），花費是 0 或沒有，這一行就不顯示。
 
-Reset times use the en-US 12-hour format and your local time zone, as `/usage` does.
+重設時間用 en-US 的 12 小時制與本機時區，和 `/usage` 一樣。
 
-## What the mod writes and runs
+## 這個 mod 會寫什麼、跑什麼
 
-Nothing leaves your machine: the mod makes no network requests and sends no telemetry.
+資料不會離開你的電腦：mod 不連網，也不送任何遙測。
 
-- **Plugin store**: two keys (`autoOpen`, `collapsed`) in the plugin's own JSON file under Claude Code's configuration directory.
-- **Flag file, optional**: `~/.claude/desk-panel/open/<session id>` containing `open` or `closed`, written only if you created the folder `~/.claude/desk-panel/open/` yourself (checked at session start and on `/panel`). See the next section. Home is `USERPROFILE` on Windows, `HOME` elsewhere.
-- **git**, read-only, in the session's repository, each call with `--no-optional-locks` and a 5-second timeout: `status --porcelain=v1 -uall`, `rev-parse --abbrev-ref HEAD`, `rev-list --left-right --count @{upstream}...HEAD`, `diff HEAD --numstat`, `log -1`, `log --since=<session start>`, and `diff HEAD -- <file>` when you expand a file. At most 100 files are kept in state; the count stays exact.
-- **While the panel is open**: usage, header and the subagent list are polled every 5 seconds; git runs about 2 seconds after an Edit, Write, NotebookEdit, Bash or PowerShell call finishes and at the end of each turn; the context breakdown at the end of each turn. **While it is closed** nothing polls and git never runs; tool calls, plan, changes, activity and background tasks are still tracked so the panel has the session's history when you open it.
+- **plugin 的 store**：兩個鍵（`autoOpen`、`collapsed`），存在 Claude Code 設定目錄下這個 plugin 自己的 JSON 檔。
+- **旗標檔（選用）**：`~/.claude/desk-panel/open/<session id>`，內容是 `open` 或 `closed`。只有你自己建立了 `~/.claude/desk-panel/open/` 這個資料夾才會寫（工作階段開始與 `/panel` 時檢查），見下一節。家目錄在 Windows 用 `USERPROFILE`，其他系統用 `HOME`。
+- **git**（唯讀）在工作階段的 repo 裡執行，每次都帶 `--no-optional-locks`、5 秒逾時：`status --porcelain=v1 -uall`、`rev-parse --abbrev-ref HEAD`、`rev-list --left-right --count @{upstream}...HEAD`、`diff HEAD --numstat`、`log -1`、`log --since=<工作階段開始>`，以及展開檔案時的 `diff HEAD -- <file>`。狀態裡最多存 100 個檔案，總數照實顯示。
+- **面板開著時**：每 5 秒輪詢用量、標頭、subagent 清單；Edit／Write／NotebookEdit／Bash／PowerShell 結束後約 2 秒以及每回合結束時跑 git；每回合結束時更新 context 分類。**面板關著時**不輪詢、不跑 git；工具呼叫、計畫、改過的檔案、活動與背景任務照常記錄，開啟時就有這個工作階段的歷史。
 
-## Optional: hide your status line while the panel is open
+## 選用：面板開著時隱藏狀態列
 
-The panel repeats what a status line usually shows. If you want your status line to disappear while the panel is open, create the flag folder:
+面板上已經有狀態列通常會顯示的資訊。想讓狀態列在面板開著時消失，先建立旗標資料夾：
 
 ```bash
 mkdir -p ~/.claude/desk-panel/open
 ```
 
-From then on the mod writes `open` or `closed` to `~/.claude/desk-panel/open/<session id>`. Your status line command receives the session id in its JSON input, so it can exit early:
+之後 mod 會在 `~/.claude/desk-panel/open/<session id>` 寫入 `open` 或 `closed`。狀態列指令的 JSON 輸入裡有 session id，讀到 `open` 就直接結束：
 
 ```bash
 #!/bin/bash
 input=$(cat)
 id=$(printf '%s' "$input" | jq -r '.session_id')
 [ "$(cat "$HOME/.claude/desk-panel/open/$id" 2>/dev/null)" = "open" ] && exit 0
-# ... your status line below
+# ... 下面接你原本的狀態列
 ```
 
-The status line is not redrawn instantly: it disappears or returns on its next update. The files are never deleted (there is no delete API; a closed panel writes `closed`), so clear the folder whenever you like. Without the folder the mod writes nothing.
+狀態列不是即時重畫：開關面板後要等它下一次更新才會消失或出現。檔案不會被刪除（沒有刪檔 API，關閉時寫 `closed`），想清就整個資料夾清掉。沒有這個資料夾，mod 什麼都不寫。
 
-## Fault tolerance
+## 容錯
 
-- Each section fails on its own. A source that fails (usage, model name, subagent list, git, context breakdown) marks only its section with `⚠` and the reason; the last good data stays. Polled sources are marked only after two misses in a row, and the mark clears when they recover.
-- If git cannot read the repository (not on `PATH`, timeout, `safe.directory`), the Git section shows git's own message; a diff that cannot be loaded says `(diff unavailable)`.
-- A section that fails to draw (for example state left by an earlier version) shows `⚠ could not draw this section`; if the whole panel cannot be drawn, it shows the reason and how to recover (`/panel reset`, `/reload-plugins`).
-- A button whose action fails explains in a toast; a failing `/panel` command replies with the reason.
+- 每個區塊各自容錯。資料來源失敗（用量、模型名稱、subagent 清單、git、context 分類）時，只有對應的區塊標出 `⚠` 與原因，上一次的資料繼續顯示；輪詢的來源連續失敗兩次才標，恢復後自動消失。
+- git 讀不了 repo（不在 `PATH`、逾時、`safe.directory`）時，Git 區塊顯示 git 自己的訊息；取不到的 diff 顯示 `(diff unavailable)`。
+- 區塊畫不出來（例如舊版本留下的狀態）時顯示 `⚠ could not draw this section`；整個面板都畫不出來時顯示原因與復原方式（`/panel reset`、`/reload-plugins`）。
+- 按鈕的動作失敗時用 toast 說明；`/panel` 指令失敗時回覆原因。
 
-## Development
+## 開發
 
-The repository is a plugin marketplace with one plugin; the mod itself lives in [`desk-panel/`](desk-panel).
+這個 repo 是只含一個 plugin 的 marketplace，mod 本體在 [`desk-panel/`](desk-panel)。
 
 ```bash
 git clone https://github.com/joshotws/desk-panel
@@ -115,41 +115,41 @@ cd desk-panel
 claude --plugin-dir ./desk-panel
 ```
 
-Loading the mod from its folder in an interactive session writes the engine's API types to `desk-panel/.claude-plugin/types/` (git-ignored; `desk-panel/tsconfig.json` extends the `tsconfig.json` written there). Until that first load, the editor cannot resolve the `claude-code` module. Saving a file reloads the mod in that session. To run it as an installed plugin instead, add the clone as a marketplace (`claude plugin marketplace add /path/to/desk-panel`, then `claude plugin install desk-panel@desk-panel`): a folder marketplace is read in place, so edits apply after `/reload-plugins`.
+在互動的工作階段裡從資料夾載入 mod，引擎會把 API 型別寫到 `desk-panel/.claude-plugin/types/`（git 已忽略；`desk-panel/tsconfig.json` 就是 extends 那裡的 `tsconfig.json`）。第一次載入之前，編輯器會找不到 `claude-code` 模組。存檔後該工作階段會重新載入 mod。要改用安裝的方式跑，把 clone 下來的資料夾加成 marketplace（`claude plugin marketplace add /path/to/desk-panel`，再 `claude plugin install desk-panel@desk-panel`）：資料夾型 marketplace 直接讀原資料夾，改完 `/reload-plugins` 就生效。
 
-Before a commit:
+commit 之前：
 
 ```bash
-claude plugin validate desk-panel   # what the engine will refuse, and what the module hooks and calls
-claude plugin test desk-panel       # desk-panel/tests/*.test.tsx against the engine
-npx -p typescript tsc -p desk-panel # type-check hooks, types and tests
+claude plugin validate desk-panel   # 引擎會不會拒絕，以及模組 hook 了什麼、呼叫了什麼
+claude plugin test desk-panel       # 用引擎跑 desk-panel/tests/*.test.tsx
+npx -p typescript tsc -p desk-panel # 型別檢查 hooks、types 與 tests
 ```
 
-The engine's static scan requires `read($, atom)` and `update($, atom, ...)` to name the atom constant at the call site; do not wrap them in helpers. `desk-panel/types/index.d.ts` is the mod's state contract.
+引擎的靜態掃描要求 `read($, atom)`、`update($, atom, ...)` 在呼叫處直接寫出 atom 常數，不要包成輔助函式。`desk-panel/types/index.d.ts` 是這個 mod 的狀態契約。
 
-## Uninstall
+## 移除
 
-Toggle it off in `/plugin`, or remove it:
+在 `/plugin` 裡暫時關掉，或整個移除：
 
 ```bash
 claude plugin uninstall desk-panel@desk-panel
 ```
 
-If you created the flag folder, delete `~/.claude/desk-panel/`.
+有建立旗標資料夾的話，把 `~/.claude/desk-panel/` 刪掉即可。
 
-## Known limitations
+## 已知限制
 
-- The hooks-module API is early access; a Claude Code update can break the mod until it is updated.
-- `git status -uall` lists every untracked file (ignored files excluded), which can be slow in a large untracked tree.
-- File keys compare case-insensitively on Windows paths and case-sensitively elsewhere.
-- Times are formatted en-US, as `/usage` does.
+- hooks-module API 是 early access；Claude Code 更新後 mod 可能失效，要等更新。
+- `git status -uall` 會列出每一個未追蹤的檔案（已忽略的除外），未追蹤的檔案很多時會慢。
+- 檔案的比對鍵在 Windows 路徑不分大小寫，其他系統分大小寫。
+- 時間格式固定 en-US，和 `/usage` 一樣。
 
-## Contributing
+## 貢獻
 
-Issues and pull requests are welcome. Run `claude plugin validate`, `claude plugin test` and `tsc` before opening one. Code comments are in Traditional Chinese; English is fine for new ones.
+歡迎開 issue 或 pull request。送出前請跑 `claude plugin validate`、`claude plugin test` 與 `tsc`。程式註解是繁體中文，新寫的用英文也可以。
 
-## License and disclaimer
+## 授權與免責
 
-[MIT](LICENSE).
+[MIT](LICENSE)。
 
-This is an independent project, not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic, PBC. The panel's layout is modelled on the Claude desktop app's side panel. The illustration above, the GitHub social preview (`docs/social-preview.png`) and the plugin icon were generated with OpenAI gpt-image-2; their prompts are in [`docs/`](docs).
+這是獨立專案，與 Anthropic 無關，也未經其背書。Claude 與 Claude Code 是 Anthropic, PBC 的商標。面板版面仿照 Claude desktop app 的側邊面板。上方示意圖、GitHub social preview（`docs/social-preview.png`）與 plugin 圖示都由 OpenAI gpt-image-2 產生，prompt 放在 [`docs/`](docs)。
