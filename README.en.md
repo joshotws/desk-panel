@@ -1,6 +1,6 @@
 # desk-panel
 
-English · [繁體中文](README.zh-TW.md)
+[繁體中文](README.md) · English
 
 A side panel for [Claude Code](https://code.claude.com/docs) in the terminal, laid out like the Claude desktop app's right-hand panel: the plan, the files Claude changed, background tasks and subagents, usage and git, in one pane you can act on. Expand a file to see its diff, jump to a subagent's transcript, or open `/diff`. Usage reads right on a subscription and on per-token billing (API key, Bedrock, Vertex, gateways), a failing data source affects only its own section, and while the panel is closed it polls nothing and runs no git.
 

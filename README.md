@@ -1,6 +1,6 @@
 # desk-panel
 
-[English](README.md) · 繁體中文
+繁體中文 · [English](README.en.md)
 
 給 [Claude Code](https://code.claude.com/docs) 終端機用的側邊面板，版面對應 Claude desktop app 的右側面板：計畫、Claude 改過的檔案、背景任務與 subagent、用量和 git 集中在同一個面板，而且可以直接操作，例如展開檔案看 diff、切去看 subagent 的對話、開 `/diff`。訂閱制和按 token 計費（API key、Bedrock、Vertex、閘道）的用量都能正確顯示；某個資料來源出錯只影響它自己的區塊；面板關著時不輪詢，也不跑 git。
 
